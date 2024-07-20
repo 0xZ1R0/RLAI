@@ -1,30 +1,18 @@
-import gymnasium as gym
-from stable_baselines3 import PPO
-from stable_baselines3.common.evaluation import evaluate_policy
+import argparse
+from train import train_model
+from visualize import visualize_model
 
-# Create the environment
-env = gym.make('Humanoid-v4')
+def main():
+    parser = argparse.ArgumentParser(description="Train and visualize an AI model.")
+    parser.add_argument("--visualize", action="store_true", help="Visualize the AI in 3D.")
+    args = parser.parse_args()
 
-# Initialize the PPO agent
-model = PPO("MlpPolicy", env, verbose=1)
+    model = train_model()
 
-# Train the agent
-model.learn(total_timesteps=2000000)
+    if args.visualize:
+        visualize_model(model)
+    else:
+        print("Model training complete. Use --visualize to see the AI in 3D.")
 
-# Evaluate the agent
-mean_reward, std_reward = evaluate_policy(model, env, n_eval_episodes=10)
-print(f"Mean reward: {mean_reward} +/- {std_reward}")
-
-# Save the model
-model.save("ppo_humanoid")
-
-# Load the model (optional)
-# model = PPO.load("ppo_humanoid")
-
-# Test the model
-obs = env.reset()
-for _ in range(1000):
-    action, _states = model.predict(obs)
-    obs, rewards, dones, info = env.step(action)
-    env.render()
-env.close()
+if __name__ == "__main__":
+    main()
