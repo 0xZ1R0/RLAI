@@ -1,18 +1,13 @@
 import argparse
 from train import train_model
-from visualize import visualize_model
 
 def main():
-    parser = argparse.ArgumentParser(description="Train and visualize an AI model.")
-    parser.add_argument("--visualize", action="store_true", help="Visualize the AI in 3D.")
+    parser = argparse.ArgumentParser(description="Train an AI model.")
+    parser.add_argument("--iterations", type=int, default=1, help="Number of training iterations.")
     args = parser.parse_args()
 
-    model = train_model()
-
-    if args.visualize:
-        visualize_model(model)
-    else:
-        print("Model training complete. Use --visualize to see the AI in 3D.")
+    for _ in range(args.iterations):
+        train_model()
 
 if __name__ == "__main__":
     main()
