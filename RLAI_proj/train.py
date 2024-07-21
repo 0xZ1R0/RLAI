@@ -39,11 +39,13 @@ else:
     print("Training new model...")
     # Initialize the PPO agent with adjusted hyperparameters
     model = PPO("MlpPolicy", env, verbose=1, device=device, 
-                learning_rate=0.00010931712854992515, 
-                batch_size=32, 
-                gamma=0.9156523696382826, 
-                ent_coef=0.016435014547052013, 
-                clip_range=0.3067566853446043)
+                learning_rate=0.0005028079767203933, 
+                batch_size=16, 
+                gamma=0.976633446886447, 
+                ent_coef=1.1370504201084368e-08, 
+                clip_range=0.3990038259701256)
+                #TIRAL 29 Mean Reward: 539.9328608512878
+
 
 # Train the agent
 model.learn(total_timesteps=500000)
