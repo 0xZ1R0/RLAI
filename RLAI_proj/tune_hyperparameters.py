@@ -19,7 +19,7 @@ def objective(trial):
     env = gym.wrappers.RecordEpisodeStatistics(env)  # To record episode statistics
 
     model = PPO("MlpPolicy", env, verbose=0, learning_rate=learning_rate, batch_size=batch_size, gamma=gamma, ent_coef=ent_coef, clip_range=clip_range)
-    model.learn(total_timesteps=10000)
+    model.learn(total_timesteps=300000)
 
     mean_reward, _ = evaluate_policy(model, env, n_eval_episodes=5)
     logger.info(f"Trial {trial.number} - Params: {trial.params} - Mean Reward: {mean_reward}")
@@ -27,7 +27,7 @@ def objective(trial):
 
 def tune_hyperparameters():
     study = optuna.create_study(direction='maximize')
-    study.optimize(objective, n_trials=100, n_jobs=1)
+    study.optimize(objective, n_trials=1000, n_jobs=-1)
 
     logger.info("Best trial:")
     trial = study.best_trial
@@ -35,6 +35,14 @@ def tune_hyperparameters():
     logger.info("  Params: ")
     for key, value in trial.params.items():
         logger.info(f"    {key}: {value}")
+
+    # Save the best hyperparameters to a file
+    with open('best_hyperparameters.txt', 'w') as f:
+        f.write(f"Best trial:\n")
+        f.write(f"  Value: {trial.value}\n")
+        f.write("  Params:\n")
+        for key, value in trial.params.items():
+            f.write(f"    {key}: {value}\n")
 
 if __name__ == "__main__":
     tune_hyperparameters()

@@ -38,7 +38,12 @@ if os.path.exists(model_path):
 else:
     print("Training new model...")
     # Initialize the PPO agent with adjusted hyperparameters
-    model = PPO("MlpPolicy", env, verbose=1, device=device, learning_rate=0.0003, batch_size=64, gamma=0.99, ent_coef=0.01, clip_range=0.2)
+    model = PPO("MlpPolicy", env, verbose=1, device=device, 
+                learning_rate=0.00010931712854992515, 
+                batch_size=32, 
+                gamma=0.9156523696382826, 
+                ent_coef=0.016435014547052013, 
+                clip_range=0.3067566853446043)
 
 # Train the agent
 model.learn(total_timesteps=500000)
