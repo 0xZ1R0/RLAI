@@ -48,7 +48,7 @@ else:
 
 
 # Train the agent
-model.learn(total_timesteps=500000)
+model.learn(total_timesteps=300000)
 
 # Save the model
 model.save(model_path)

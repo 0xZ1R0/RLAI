@@ -27,7 +27,7 @@ def objective(trial):
 
 def tune_hyperparameters():
     study = optuna.create_study(direction='maximize')
-    study.optimize(objective, n_trials=1000, n_jobs=-1)
+    study.optimize(objective, n_trials=100, n_jobs=-1)
 
     logger.info("Best trial:")
     trial = study.best_trial
