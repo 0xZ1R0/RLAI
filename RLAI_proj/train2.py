@@ -1,3 +1,4 @@
+# train.py
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -39,16 +40,30 @@ else:
     print("Training new model...")
     # Initialize the PPO agent with adjusted hyperparameters
     model = PPO("MlpPolicy", env, verbose=1, device=device, 
-                learning_rate=0.0010412973653407336, 
-                batch_size=32, 
-                gamma=0.92190434052873, 
-                ent_coef=0.019910219725464667, 
-                clip_range=0.157859639344467)
-                #TIRAL 4 Mean Reward: 578.3914929389954
+                learning_rate=0.0005028079767203933, 
+                batch_size=16, 
+                gamma=0.976633446886447, 
+                ent_coef=1.1370504201084368e-08, 
+                clip_range=0.3990038259701256)
+                #TIRAL 29 Mean Reward: 539.9328608512878
 
+# Define a function to adjust the learning rate
+def adjust_learning_rate(model, initial_lr, step, gamma):
+    new_lr = initial_lr * (gamma ** step)
+    for param_group in model.policy.optimizer.param_groups:
+        param_group['lr'] = new_lr
+    return new_lr
 
 # Train the agent
-model.learn(total_timesteps=300000)
+total_timesteps = 3000000
+initial_lr = 0.0005028079767203933
+gamma = 0.1
+step_size = 30000  # Adjust this value based on your needs
+
+for step in range(0, total_timesteps, step_size):
+    model.learn(total_timesteps=step_size)
+    new_lr = adjust_learning_rate(model, initial_lr, step // step_size, gamma)
+    print(f"Learning rate adjusted to {new_lr}")
 
 # Save the model
 model.save(model_path)

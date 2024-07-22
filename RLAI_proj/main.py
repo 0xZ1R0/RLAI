@@ -1,5 +1,5 @@
 import argparse
-from train import train_model
+from train2 import train_model
 
 def main():
     parser = argparse.ArgumentParser(description="Train an AI model.")

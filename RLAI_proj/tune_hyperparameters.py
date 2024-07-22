@@ -19,7 +19,7 @@ def objective(trial):
     env = gym.wrappers.RecordEpisodeStatistics(env)  # To record episode statistics
 
     model = PPO("MlpPolicy", env, verbose=0, learning_rate=learning_rate, batch_size=batch_size, gamma=gamma, ent_coef=ent_coef, clip_range=clip_range)
-    model.learn(total_timesteps=300000)
+    model.learn(total_timesteps=100000)
 
     mean_reward, _ = evaluate_policy(model, env, n_eval_episodes=5)
     logger.info(f"Trial {trial.number} - Params: {trial.params} - Mean Reward: {mean_reward}")
