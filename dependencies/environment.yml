@@ -1,0 +1,18 @@
+name: RLAI_env
+channels:
+  - defaults
+  - pytorch
+  - nvidia
+dependencies:
+  - python=3.11
+  - numpy
+  - pip
+  - pip:
+    - absl-py==2.1.0
+    - gymnasium==0.29.1
+    - gymnasium[mujoco]
+    - stable-baselines3==2.3.2
+    - optuna==4.1.0
+    - torch==2.5.1
+    - torchaudio==2.5.1
+    - torchvision==0.20.1
