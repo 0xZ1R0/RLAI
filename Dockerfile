@@ -1,7 +1,7 @@
 FROM continuumio/miniconda3:latest
 
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR /RLAI
 
 # Copy all the files into the container (including your requirements.txt)
 COPY . .
