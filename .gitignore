@@ -126,3 +126,6 @@ dmypy.json
 # Test stuff
 test/
 train.py
+
+# Dependencies
+dependencies/
